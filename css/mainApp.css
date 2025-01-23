@@ -1,0 +1,9 @@
+#education-div{
+    background-image:url('../assets/tugu-teknik.webp');
+    background-repeat: repeat;
+    background-size: contain;
+}
+
+.box {
+  background-color: aquamarine;
+}
