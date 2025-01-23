@@ -388,13 +388,60 @@ app.component("skill-div", skillsDiv);
 // EXPERIENCE DIV
 const listOfTaskWorkingDiv = {
   template: `
-  <li class="list-inside list-disc">
+  <li class="list-inside list-disc text-pretty">
     {{ task }}
   </li>
   `,
   props: ["task"],
 };
 app.component("list-of-task-div", listOfTaskWorkingDiv);
+
+const listOfImageDiv = {
+  template: `
+  <div class="relative slide">
+    <div class="carousel-indicators absolute bottom-0 flex bg-yellow-100 h-24 w-full justify-center items-center">
+      <ol class="z-50 flex w-4/12 justify-center">
+        <li v-for="(img, i) in images" :key="i" class="md:w-4 md:h-4 bg-gray-300 rounded-full cursor-pointer mx-2"></li>
+      </ol>
+    </div>
+    <div class="carousel-inner relative overflow-hidden w-full">
+      <div v-for="(img, i) in images" :id="'slide-'+i" :key="i" :class="active === i ? 'active' : 'left-full'" class="carousel-item inset-0 relative w-full transform transition-all duration-500 ease-in-out">
+        <img class="block w-full" :src="'assets/working/' + img +'.webp'" alt="First slide" />
+      </div>
+    </div>
+  </div>
+  `,
+  data() {
+    return {
+      active: 0,
+      images: [
+        "ace_tunggal",
+        "ace_ganda",
+        "giz_tunggal",
+        "giz_ganda_01",
+        "giz_ganda_02",
+        "giz_ganda_03",
+        "giz_ganda_04",
+        "giz_ganda_05",
+        "giz_ganda_06",
+        "giz_ganda_07",
+        "giz_ganda_08",
+        "giz_ganda_09",
+      ],
+    };
+  },
+  mounted() {
+    let i = 0;
+    setInterval(() => {
+      if (i > this.images.length - 1) {
+        i = 0;
+      }
+      this.active = i;
+      i++;
+    }, 2000);
+  },
+};
+app.component("list-of-image-div", listOfImageDiv);
 
 const listOfWorkingDiv = {
   template: `
@@ -457,17 +504,21 @@ const experienceDiv = {
   template: `
   <div class="m-1 gap-1">
     <h2 class="font-bold text-2xl mb-2">My Working Experience</h2>
-    <div class="w-auto h-full max-h-80 overflow-y-auto">
-      <list-of-working-div 
-          v-for="(working, i) in listOfExperience" :key="i"
-          :perusahaan="working.perusahaan"
-          :title="working.title"
-          :icon="working.icon"
-          :periodeStart="working.periodeStart"
-          :periodeEnd="working.periodeEnd"
-          :taskList="working.taskList"
-          :pictureList="working.pictureList"
-        />
+    <div class="grid grid-cols-3 gap-1">
+      <div class="col-span-2 w-auto h-full max-h-80 overflow-y-auto">
+        <list-of-working-div 
+            v-for="(working, i) in listOfExperience" :key="i"
+            :perusahaan="working.perusahaan"
+            :title="working.title"
+            :icon="working.icon"
+            :periodeStart="working.periodeStart"
+            :periodeEnd="working.periodeEnd"
+            :taskList="working.taskList"
+          />
+      </div>
+      <div>
+        <list-of-image-div />
+      </div>
     </div>
   </div>
   `,
@@ -481,7 +532,6 @@ const experienceDiv = {
           periodeStart: [2, 7, 2024],
           periodeEnd: [31, 12, 2024],
           taskList: ["Supporting ICT Team in Technical Matter"],
-          pictureList: ["ace_tunggal", "ace_ganda"],
         },
         {
           perusahaan: "GIZ - AMUSE Project",
@@ -493,18 +543,6 @@ const experienceDiv = {
             "Supported ASEAN Municipal Solid Waste Enhancement (AMUSE) Project in developing regional digital knowledge platform",
             "Assisted AMUSE Team in implementing regional activities, includes data cleaning, collection, and other data management measure",
           ],
-          pictureList: [
-            "giz_tunggal",
-            "giz_ganda_01",
-            "giz_ganda_02",
-            "giz_ganda_03",
-            "giz_ganda_04",
-            "giz_ganda_05",
-            "giz_ganda_06",
-            "giz_ganda_07",
-            "giz_ganda_08",
-            "giz_ganda_09",
-          ],
         },
         {
           perusahaan: "Voluteer Convention Event",
@@ -515,7 +553,6 @@ const experienceDiv = {
           taskList: [
             "Volunteered as Ticketing and person in charge for stand equipment",
           ],
-          pictureList: [],
         },
         {
           perusahaan: "Universitas Gadjah Mada",
@@ -527,7 +564,6 @@ const experienceDiv = {
             "Assisted laboratory participants in completing weekly assignment",
             "Conducted evaluation on laboratory participants’ study progress",
           ],
-          pictureList: [],
         },
         {
           perusahaan: "Intern Virtual Patient Team",
@@ -540,7 +576,6 @@ const experienceDiv = {
             "Wrote API Documentation",
             "Developed custom dictionary with nursery team",
           ],
-          pictureList: [],
         },
         {
           perusahaan: "Universitas Gadjah Mada",
@@ -550,9 +585,8 @@ const experienceDiv = {
           periodeEnd: [2, 6, 2022],
           taskList: [
             "Assisted laboratory participants in completing weekly assignment",
-            "Conducted evaluation on laboratory participants’ study progress",
+            "Conducted evaluation on laboratory participants' study progress",
           ],
-          pictureList: [],
         },
         {
           perusahaan: "PT Javan Cipta Solusi",
@@ -562,9 +596,8 @@ const experienceDiv = {
           periodeEnd: [2, 6, 2022],
           taskList: [
             "Assisted laboratory participants in completing weekly assignment",
-            "Conducted evaluation on laboratory participants’ study progress",
+            "Conducted evaluation on laboratory participants'’' study progress",
           ],
-          pictureList: [],
         },
       ],
     };

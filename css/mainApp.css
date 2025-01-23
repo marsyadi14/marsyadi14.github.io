@@ -1,7 +1,24 @@
-#education-div{
-    background-image:url('../assets/tugu-teknik.webp');
-    background-repeat: repeat;
-    background-size: contain;
+#education-div {
+  background-image: url("../assets/tugu-teknik.webp");
+  background-repeat: repeat;
+  background-size: contain;
+}
+
+.left-full {
+  left: -100%;
+}
+
+.carousel-item {
+  float: left;
+  position: relative;
+  display: block;
+  width: 100%;
+  margin-right: -100%;
+  backface-visibility: hidden;
+}
+
+.carousel-item.active {
+  left: 0;
 }
 
 .box {
