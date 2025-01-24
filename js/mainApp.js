@@ -517,6 +517,7 @@ const experienceDiv = {
           />
       </div>
       <div>
+        <h2 class="text-pretty font-bold text-2xl">My Journey </h2>
         <list-of-image-div />
       </div>
     </div>
