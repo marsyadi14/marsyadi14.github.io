@@ -5,107 +5,68 @@ const app = Vue.createApp({
   methods: {},
 });
 
-// KONTAK DIV
-const linkAkunDiv = {
+const mainApp = {
   template: `
-  <a :href='protocol + link' target="_blank" rel="noopener noreferrer" >
-    <div class="m-1 text-base justify-center">
-      <img class="mr-1 size-5 inline" :src='"assets/" + imageName + ".svg"' alt="" />
-      <span class="inline-block align-middle no-underline hover:underline">
-        {{ link }}
-       </span>
-    </div>
-  </a>
-  `,
-  props: ["imageName", "protocol", "link"],
-};
-app.component("link-akun-div", linkAkunDiv);
-
-const kontakDiv = {
-  template: `
-  <div class="grid grid-cols-3 gap-1 m-1">
-    <div class="col-span-2">
-      <h2 class="font-bold text-2xl">{{ contact }}</h2>
-      <link-akun-div 
-        v-for="(akun, i) in daftAkun" :key="i"
-        :imageName="akun.imageName"
-        :protocol="akun.protocol"
-        :link="akun.link"
-      />
-    </div>
-    <div>
-      <img class="p-2" src="assets/photo.webp" alt="Foto 3x4">
-    </div>
-  </div>
-  `,
-  components: ["link-akun-div"],
-  data: function () {
-    return {
-      contact: "Contact",
-      daftAkun: [
-        {
-          imageName: "github-mark-white",
-          link: "github.com/marsyadi14",
-          protocol: "https://www.",
-        },
-        {
-          imageName: "LinkedIn_icon",
-          link: "linkedin.com/in/marsyadi/",
-          protocol: "https://www.",
-        },
-        {
-          imageName: "email-svgrepo-com",
-          link: "m.arsyad.ikbar.14@gmail.com",
-          protocol: "mailto:",
-        },
-      ],
-    };
-  },
-  methods: {},
-};
-app.component("kontak-div", kontakDiv);
-
-// GENERAL DIV
-const generalDescDiv = {
-  template: `
-  <div id="education-div" class="grid grid-row-2 m-1 gap-1">
-    <div class="text-pretty">
-      <h2 class="font-bold text-2xl">About Me</h2>
-      <p>{{ desc }}</p>
-    </div>
-    <div>
-      <h2 class="font-bold text-2xl">Education</h2>
-      <div class="content flex p-1">
-        <img class="size-24" src="assets/ugm.webp" alt="" />
-        <div class="p-2">
-          <h3>{{ education.name }}</h3>
-          <p>{{ education.startYear }} - {{ education.endYear }}</p>
-          <p>Final Project - {{ education.finalProject }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <cust-header :information="information" />
+  <sect-intro :information="information" />
+  <sect-skill :information="information" />
+  <sect-license :information="information" />
+  <sect-project :information="information" />
+  <sect-experience :information="information" />
+  <sect-contact :information="information" />
+  <cust-footer :information="information" />
   `,
   data: function () {
     return {
-      desc: "I am a passionate software developer with expertise in web and mobile application. I specialize in Android mobile development and have worked on projects ranging from website management into mobile application development. I always eager to learn something new.",
-      education: {
-        name: "Universitas Gadjah Mada",
-        startYear: 2019,
-        endYear: 2025,
-        finalProject:
-          "Anaries, mobile application for learning skull’s Anatomy",
+      information: {
+        name: "Muhammad Arsyad Ikbar",
+        description:
+          "I am a passionate software engineer specializing in building scalable and efficient web and mobile applications. I specialize in Android mobile development and have worked on projects ranging from website management into mobile application development. I always eager to learn something new. Here is a glimpse of my skills, projects, and experience",
       },
     };
   },
 };
-app.component("general-div", generalDescDiv);
+app.component("main-app", mainApp);
 
-// SKILL DIV
-const listOfSkillDiv = {
+// CUSTOM HEADER
+const header = {
   template: `
-  <div class="bg-gray-300 mx-4 my-2 rounded-md content flex px-3 py-2">
-    <div class="flex items-center justify-center h-18">
+  <header class="bg-blue-600 text-white p-6">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold">{{ information.name }}</h1>
+      <nav>
+        <ul class="flex space-x-4">
+          <li><a href="#skills" class="hover:underline">Skills</a></li>
+          <li><a href="#licenses" class="hover:underline">Licenses</a></li>
+          <li><a href="#projects" class="hover:underline">Projects</a></li>
+          <li><a href="#experience" class="hover:underline">Experience</a></li>
+          <li><a href="#contact" class="hover:underline">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  `,
+  props: ["information"],
+};
+app.component("cust-header", header);
+
+// INTRODUCTION
+const sectIntro = {
+  template: `
+  <section class="container mx-auto p-6 text-center">
+    <h2 class="text-3xl font-bold mb-4">Welcome to My Portfolio</h2>
+    <p class="text-lg text-pretty">{{ information.description }}</p>
+  </section>
+  `,
+  props: ["information"],
+};
+app.component("sect-intro", sectIntro);
+
+// SKILL
+const listOfSkill = {
+  template: `
+  <div class="border bg-gray-50 shadow m-1 rounded-md content flex p-1 ">
+    <div class="flex items-center justify-center h-18 ml-2">
       <img class="w-16" :src='"assets/skill/" + icon + ".svg"' :alt="name" />
     </div>
     <div class="mx-2 p-2 w-full">
@@ -141,176 +102,158 @@ const listOfSkillDiv = {
     };
   },
 };
-app.component("list-of-skill-div", listOfSkillDiv);
+app.component("list-of-skill", listOfSkill);
 
-const listOfLicenseDiv = {
+const sectSkill = {
   template: `
-  <div class="bg-gray-300 mx-4 my-2 rounded-md content flex px-3 py-2">
-    <div class="flex items-center justify-center h-18">
-      <img class="w-16" :src='"assets/license/" + icon + ".svg"' :alt="icon" />
+<section id="skills" class="container mx-auto p-6 bg-white shadow-md rounded-lg mb-6">
+  <h3 class="text-2xl font-bold mb-4">Skills</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+    <div class="border border-gray-200 rounded-md py-3">
+      <h4 class="text-lg mb-4 ml-4">Front-End</h4>
+      <div class="grid lg:grid-cols-2 grid-cols-1 px-2">
+        <list-of-skill
+          v-for="(frontend, i) in (skillset.FrontEnd)"
+          :key="i"
+          :name="frontend.name"
+          :level="frontend.level"
+          :icon="frontend.icon"
+        />
+      </div>
     </div>
-    <div class="mx-2 p-2 w-full">
-      <h3 class="text-base mb-4">{{ name }}</h3>
-      <a :href="certificate" target="_blank" rel="noopener noreferrer">
-        <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white px-2 border border-blue-500 hover:border-transparent rounded"> See Credential</button>
-      </a>
+    <div class="border border-gray-200 rounded-md py-3 px-2">
+      <h4 class="text-lg mb-4 ml-4">Back-End</h4>
+      <div class="grid lg:grid-cols-2 grid-cols-1">
+        <list-of-skill
+          v-for="(backend, i) in (skillset.BackEnd)"
+          :key="i"
+          :name="backend.name"
+          :level="backend.level"
+          :icon="backend.icon"
+        />
+      </div>
+    </div>
+    <div class="border border-gray-200 rounded-md py-3 px-2">
+      <h4 class="text-lg mb-4 ml-4">Database</h4>
+      <div class="grid lg:grid-cols-2 grid-cols-1">
+        <list-of-skill
+          v-for="(database, i) in (skillset.Database)"
+          :key="i"
+          :name="database.name"
+          :level="database.level"
+          :icon="database.icon"
+        />
+      </div>
+    </div>
+    <div class="border border-gray-200 rounded-md py-3 px-2">
+      <h4 class="text-lg mb-4 ml-4">Android</h4>
+      <div class="grid lg:grid-cols-2 grid-cols-1">
+        <list-of-skill
+          v-for="(android, i) in (skillset.Android)"
+          :key="i"
+          :name="android.name"
+          :level="android.level"
+          :icon="android.icon"
+        />
+      </div>
+    </div>
+    <div class="border border-gray-200 rounded-md py-3 px-2">
+      <h4 class="text-lg mb-4 ml-4">General</h4>
+      <div class="grid lg:grid-cols-2 grid-cols-1">
+        <list-of-skill
+          v-for="(general, i) in (skillset.General)"
+          :key="i"
+          :name="general.name"
+          :level="general.level"
+          :icon="general.icon"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+  `,
+  props: ["information"],
+  data() {
+    return {
+      skillset: {
+        // Beginner = 0...Advanced = 2
+        General: [
+          { name: "Python", level: 2, icon: "python" },
+          { name: "C", level: 2, icon: "c_lang" },
+          { name: "C++", level: 2, icon: "cpp" },
+          { name: "C#", level: 2, icon: "csharp" },
+          { name: "Java", level: 2, icon: "java" },
+          { name: "Go", level: 0, icon: "golang", type: "General" },
+        ],
+        Android: [
+          { name: "Kotlin", level: 2, icon: "kotlin" },
+          { name: "Dart", level: 0, icon: "dart" },
+          { name: "Flutter", level: 0, icon: "flutter" },
+        ],
+        FrontEnd: [
+          { name: "HTML", level: 2, icon: "html" },
+          { name: "VueJS", level: 0, icon: "vue" },
+          { name: "CSS", level: 1, icon: "css-3" },
+          { name: "Tailwind CSS", level: 0, icon: "tailwindcss" },
+        ],
+        BackEnd: [
+          { name: "JavaScript", level: 2, icon: "javascript" },
+          { name: "PHP", level: 1, icon: "php" },
+          { name: "Wordpress", level: 1, icon: "wordpress" },
+        ],
+        Database: [
+          { name: "SQL", level: 1, icon: "sql-db" },
+          { name: "NoSQL", level: 1, icon: "nosql" },
+          { name: "R (Lang)", level: 0, icon: "rlang" },
+        ],
+      },
+    };
+  },
+};
+app.component("sect-skill", sectSkill);
+
+const listOfLicense = {
+  template: `
+  <div class="p-4 bg-gray-50 rounded shadow content flex m-2">
+    <div class="flex items-center justify-center h-18">
+      <img class="w-24" :src='"assets/license/" + icon + ".svg"' :alt="icon" />
+    </div>
+    <div class="mx-2 p-2 w-full">      
+      <h4 class="font-bold mb-2">{{ name }}</h4>
+      <a :href="certificate" class="text-blue-600 hover:underline">See Credential</a>
     </div>
   </div>
   `,
   props: ["name", "certificate", "icon"],
+  data() {
+    return {
+      credentialButton:
+        "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white px-2 border border-blue-500 hover:border-transparent rounded",
+    };
+  },
 };
-app.component("list-of-license-div", listOfLicenseDiv);
+app.component("list-of-license", listOfLicense);
 
-const skillsDiv = {
+const sectLicense = {
   template: `
-  <div class="grid grid-cols-2 gap-2 mb-2">
-    <button @click="switchSkill" :class="getSkillStyle()">
-      Skill
-    </button>
-    <button @click="switchLicense" :class="getLicenseStyle()">
-      License
-    </button>
-  </div>
-  <div :class="overflowClass" v-if="isSkill">
-    <list-of-skill-div 
-        v-for="(skill, i) in listOfSkill" :key="i"
-        :name="skill.name"
-        :level="skill.level"
-        :icon="skill.icon"
-      />
-  </div>
-  <div :class="overflowClass" v-else>
-    <list-of-license-div 
-        v-for="(license, i) in listOfLicense" :key="i"
+<section id="licenses" class="container mx-auto p-6 bg-white shadow-md rounded-lg mb-6">
+  <h3 class="text-2xl font-bold mb-4">Licenses</h3>
+  <div class="border border-gray-200 rounded-md py-3 px-2">
+    <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
+      <list-of-license
+        v-for="(license, i) in listOfLicense"
+        :key="i"
         :name="license.name"
         :certificate="license.certificate"
         :icon="license.icon"
       />
+    </div>
   </div>
+</section>
   `,
-  methods: {
-    getSkillStyle() {
-      if (this.isSkill) {
-        return this.isSelected;
-      } else {
-        return this.isNotSelected;
-      }
-    },
-    getLicenseStyle() {
-      if (!this.isSkill) {
-        return this.isSelected;
-      } else {
-        return this.isNotSelected;
-      }
-    },
-    switchSkill() {
-      this.isSkill = true;
-    },
-    switchLicense() {
-      this.isSkill = false;
-    },
-  },
+  props: ["information"],
   data() {
     return {
-      isSkill: true,
-      overflowClass: "w-auto h-full max-h-80 overflow-y-auto",
-      isSelected:
-        "bg-blue-500 font-semibold text-white py-2 px-4 border border-transparent rounded",
-      isNotSelected:
-        "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded",
-      listOfSkill: [
-        // Beginner = 0...Advanced = 2
-        {
-          name: "Python",
-          level: 2,
-          icon: "python",
-        },
-        {
-          name: "C",
-          level: 1,
-          icon: "c_lang",
-        },
-        {
-          name: "C++",
-          level: 2,
-          icon: "cpp",
-        },
-        {
-          name: "C#",
-          level: 2,
-          icon: "csharp",
-        },
-        {
-          name: "Java",
-          level: 2,
-          icon: "java",
-        },
-        {
-          name: "Kotlin",
-          level: 2,
-          icon: "kotlin",
-        },
-        {
-          name: "Dart",
-          level: 0,
-          icon: "dart",
-        },
-        {
-          name: "Flutter",
-          level: 0,
-          icon: "flutter",
-        },
-        {
-          name: "HTML",
-          level: 2,
-          icon: "html",
-        },
-        {
-          name: "JavaScript",
-          level: 2,
-          icon: "javascript",
-        },
-        {
-          name: "VueJS",
-          level: 0,
-          icon: "vue",
-        },
-        {
-          name: "PHP",
-          level: 1,
-          icon: "php",
-        },
-        {
-          name: "CSS",
-          level: 1,
-          icon: "css-3",
-        },
-        {
-          name: "Tailwind CSS",
-          level: 0,
-          icon: "tailwindcss",
-        },
-        {
-          name: "SQL",
-          level: 1,
-          icon: "sql-db",
-        },
-        {
-          name: "Wordpress",
-          level: 1,
-          icon: "wordpress",
-        },
-        {
-          name: "Go",
-          level: 0,
-          icon: "golang",
-        },
-        {
-          name: "R (Lang)",
-          level: 0,
-          icon: "rlang",
-        },
-      ],
       listOfLicense: [
         {
           name: "Introduction to DevOps",
@@ -381,12 +324,97 @@ const skillsDiv = {
       ],
     };
   },
-  components: ["list-of-skill-div"],
 };
-app.component("skill-div", skillsDiv);
+app.component("sect-license", sectLicense);
 
-// EXPERIENCE DIV
-const listOfTaskWorkingDiv = {
+// PROJECT
+const listOfProject = {
+  template: `
+  <div class="p-4 bg-gray-50 rounded shadow content flex">
+    <div class="flex items-center justify-center h-18">
+      <img class="w-24" :src='"assets/work_logo/" + icon + ".webp"' :alt="icon" />
+    </div>
+    <div class="mx-2 p-2 w-full">      
+      <h4 class="font-bold mb-2">{{ name }}</h4>
+      <p>Description: {{ desc }}</p>
+      <p>Technologies Used: {{ commaString(techUsed) }}</p>
+      <a href="projectLink" class="text-blue-600 hover:underline">View Project</a>
+    </div>
+  </div>
+  `,
+  props: ["name", "icon", "desc", "techUsed", "projectLink"],
+  data() {
+    return {};
+  },
+  methods: {
+    commaString(stringList) {
+      return stringList.join(", ");
+    },
+  },
+};
+app.component("list-of-project", listOfProject);
+
+const sectProject = {
+  template: `
+  <section id="projects" class="container mx-auto p-6 bg-white shadow-md rounded-lg mb-6">
+    <h3 class="text-2xl font-bold mb-4">Projects</h3>
+    <div class="grid lg:grid-cols-2 grid-cols-1 gap-4">
+      <list-of-project
+          v-for="(project, i) in projectList"
+          :key="i"
+          :name="project.name"
+          :organization="project.organization"
+          :icon="project.icon"
+          :desc="project.desc"
+          :techUsed="project.techUsed"
+          :projectLink="project.projectLink"
+        />
+    </div>
+  </section>
+  `,
+  data() {
+    return {
+      projectList: [
+        {
+          name: "API Pasien Virtual",
+          organization: "Kalikesia",
+          icon: "kalikesia",
+          desc: "Creating API documentation for nurse training web application.",
+          techUsed: ["JavaScript"],
+          projectLink: "https://github.com/Kalikesia/Pasien-Virtual",
+        },
+        {
+          name: "Anaries (Kotlin)",
+          organization: "Universitas Gadjah mada",
+          icon: "ugm",
+          desc: "Android Application for learning skull anatomy using immersive learning powered.",
+          techUsed: ["Kotlin"],
+          projectLink: "https://github.com/damiosdam/anaries-kotlin",
+        },
+        {
+          name: "ASEAN Centre for Energy Website",
+          organization: "Asean Centre for Energy",
+          icon: "ace",
+          desc: "Homepage for ACCEPT II news and research data",
+          techUsed: ["Wordpress", "HTML", "JavaScript", "CSS"],
+          projectLink: "https://aseanenergy.org/",
+        },
+        {
+          name: "ASEAN Climate Change and Energy Project (ACCEPT) Website",
+          organization: "Asean Centre for Energy",
+          icon: "ace",
+          desc: "Homepage for ACE news and research data",
+          techUsed: ["Wordpress", "HTML", "JavaScript", "CSS"],
+          projectLink: "https://accept.aseanenergy.org/",
+        },
+      ],
+    };
+  },
+};
+app.component("sect-project", sectProject);
+
+// EXPERIENCE
+const listOfTaskWorking = {
   template: `
   <li class="list-inside list-disc text-pretty">
     {{ task }}
@@ -394,66 +422,19 @@ const listOfTaskWorkingDiv = {
   `,
   props: ["task"],
 };
-app.component("list-of-task-div", listOfTaskWorkingDiv);
+app.component("list-of-task", listOfTaskWorking);
 
-const listOfImageDiv = {
+const listOfExperience = {
   template: `
-  <div class="relative slide">
-    <div class="carousel-indicators absolute bottom-0 flex bg-yellow-100 h-24 w-full justify-center items-center">
-      <ol class="z-50 flex w-4/12 justify-center">
-        <li v-for="(img, i) in images" :key="i" class="md:w-4 md:h-4 bg-gray-300 rounded-full cursor-pointer mx-2"></li>
-      </ol>
-    </div>
-    <div class="carousel-inner relative overflow-hidden w-full">
-      <div v-for="(img, i) in images" :id="'slide-'+i" :key="i" :class="active === i ? 'active' : 'left-full'" class="carousel-item inset-0 relative w-full transform transition-all duration-500 ease-in-out">
-        <img class="block w-full" :src="'assets/working/' + img +'.webp'" alt="First slide" />
-      </div>
-    </div>
-  </div>
-  `,
-  data() {
-    return {
-      active: 0,
-      images: [
-        "ace_tunggal",
-        "ace_ganda",
-        "giz_tunggal",
-        "giz_ganda_01",
-        "giz_ganda_02",
-        "giz_ganda_03",
-        "giz_ganda_04",
-        "giz_ganda_05",
-        "giz_ganda_06",
-        "giz_ganda_07",
-        "giz_ganda_08",
-        "giz_ganda_09",
-      ],
-    };
-  },
-  mounted() {
-    let i = 0;
-    setInterval(() => {
-      if (i > this.images.length - 1) {
-        i = 0;
-      }
-      this.active = i;
-      i++;
-    }, 2000);
-  },
-};
-app.component("list-of-image-div", listOfImageDiv);
-
-const listOfWorkingDiv = {
-  template: `
-  <div class="bg-gray-300 mx-4 my-2 rounded-md content flex px-3 py-2">
+  <div class="p-4 bg-gray-50 rounded shadow content flex">
     <div class="flex items-center justify-center h-18">
       <img class="w-24" :src='"assets/work_logo/" + icon + ".webp"' :alt="icon" />
     </div>
-    <div class="mx-2 p-2 w-full">
-      <h3 class="font-bold text-base">{{ perusahaan }} - {{ title }}</h3>
+    <div class="mx-2 p-2 w-full">      
+      <h4 class="font-bold text-base">{{ perusahaan }} - {{ title }}</h4>
       <p>{{ getDuration() }}</p>
       <ul>
-        <list-of-task-div 
+        <list-of-task 
           v-for="(task, i) in taskList" :key="i"
           :task="task"
         />
@@ -498,34 +479,28 @@ const listOfWorkingDiv = {
     },
   },
 };
-app.component("list-of-working-div", listOfWorkingDiv);
+app.component("list-of-experience", listOfExperience);
 
-const experienceDiv = {
+const sectExperience = {
   template: `
-  <div class="m-1 gap-1">
-    <h2 class="font-bold text-2xl mb-2">My Working Experience</h2>
-    <div class="grid grid-cols-3 gap-1">
-      <div class="col-span-2 w-auto h-full max-h-80 overflow-y-auto">
-        <list-of-working-div 
-            v-for="(working, i) in listOfExperience" :key="i"
-            :perusahaan="working.perusahaan"
-            :title="working.title"
-            :icon="working.icon"
-            :periodeStart="working.periodeStart"
-            :periodeEnd="working.periodeEnd"
-            :taskList="working.taskList"
-          />
-      </div>
-      <div>
-        <h2 class="text-pretty font-bold text-2xl">My Journey </h2>
-        <list-of-image-div />
-      </div>
-    </div>
+  <section id="experience" class="container mx-auto p-6 bg-white shadow-md rounded-lg mb-6">
+  <h3 class="text-2xl font-bold mb-4">Experiences</h3>
+  <div class="space-y-4">
+    <list-of-experience 
+      v-for="(working, i) in experienceList" :key="i"
+      :perusahaan="working.perusahaan"
+      :title="working.title"
+      :icon="working.icon"
+      :periodeStart="working.periodeStart"
+      :periodeEnd="working.periodeEnd"
+      :taskList="working.taskList"
+    />
   </div>
+  </section>
   `,
   data() {
     return {
-      listOfExperience: [
+      experienceList: [
         {
           perusahaan: "ASEAN Centre for Energy",
           icon: "ace",
@@ -563,7 +538,7 @@ const experienceDiv = {
           periodeEnd: [29, 11, 2022],
           taskList: [
             "Assisted laboratory participants in completing weekly assignment",
-            "Conducted evaluation on laboratory participants’ study progress",
+            "Conducted evaluation on laboratory participants' study progress",
           ],
         },
         {
@@ -597,33 +572,40 @@ const experienceDiv = {
           periodeEnd: [2, 6, 2022],
           taskList: [
             "Assisted laboratory participants in completing weekly assignment",
-            "Conducted evaluation on laboratory participants'’' study progress",
+            "Conducted evaluation on laboratory participants' study progress",
           ],
         },
       ],
     };
   },
 };
-app.component("experience-div", experienceDiv);
+app.component("sect-experience", sectExperience);
 
-const mainApp = {
+const sectContact = {
   template: `
-  <h1 class="font-serif font-bold text-5xl text-center">
-    {{ fullName }}
-  </h1>
-  <div class="m-2 grid grid-cols-3 gap-2">
-    <div class="box"><kontak-div /></div>
-    <div class="box col-span-2"><general-div /></div>
-    <div class="box row-span-2 p-2"><skill-div /></div>
-    <div class="box col-span-2 row-span-2"><experience-div/></div>
-  </div>
+  <section id="contact" class="container mx-auto p-6 bg-white shadow-md rounded-lg mb-6">
+    <h3 class="text-2xl font-bold mb-4">Contact Me</h3>
+      <p>If you'd like to work together or have any questions, feel free to reach out!</p>
+      <form action="mailto:m.arsyad.ikbar.14@gmail.com" method="post" enctype="text/plain" class="mt-4">
+      <input type="text" placeholder="Your Name" class="block w-full p-2 mb-4 border rounded" />
+      <input type="email" placeholder="Your Email" class="block w-full p-2 mb-4 border rounded" />
+      <textarea type="mail" placeholder="Your Message" class="block w-full p-2 mb-4 border rounded"></textarea>
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 mr-1 rounded hover:bg-blue-700">Send</button>
+      <button type="reset" class="bg-red-600 text-white px-4 py-2 ml-1 rounded hover:bg-blue-700">Reset</button>
+    </form>
+  </section>
   `,
-  data() {
-    return {
-      fullName: "Muhammad Arsyad Ikbar",
-    };
-  },
 };
-app.component("main-app", mainApp);
+app.component("sect-contact", sectContact);
+
+const footer = {
+  template: `
+  <footer class="bg-gray-800 text-white p-4 text-center">
+  <p>&copy; 2025 {{ information.name }}. All rights reserved.</p>
+  </footer>
+  `,
+  props: ["information"],
+};
+app.component("cust-footer", footer);
 
 app.mount("#app");
