@@ -338,7 +338,7 @@ const listOfProject = {
       <h4 class="font-bold mb-2">{{ name }}</h4>
       <p>Description: {{ desc }}</p>
       <p>Technologies Used: {{ commaString(techUsed) }}</p>
-      <a href="projectLink" class="text-blue-600 hover:underline">View Project</a>
+      <a :href="projectLink" class="text-blue-600 hover:underline">View Project</a>
     </div>
   </div>
   `,
